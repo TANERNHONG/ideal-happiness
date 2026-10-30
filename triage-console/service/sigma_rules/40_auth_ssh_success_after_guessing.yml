@@ -1,0 +1,35 @@
+title: SSH login succeeded
+id: 9a6c3e27-4d1b-4a85-b2f9-8e0d5c7a1b76
+name: dad_ssh_login_success
+status: experimental
+description: One accepted SSH login. Used by the correlation below; reports nothing itself.
+logsource:
+  product: solaris
+  service: sshd
+detection:
+  selection:
+    event_type: SSH_LOGIN_SUCCESS
+  condition: selection
+level: informational
+---
+title: SSH login after password guessing
+id: e1b4f7a3-6c2d-4e98-a0b5-3f9c8d2e1a87
+status: experimental
+description: Password guessing from an address, then a successful login from the same address on the same server within 10 minutes (AUTH-05).
+correlation:
+  type: temporal_ordered
+  rules:
+    - dad_ssh_guessing
+    - dad_ssh_login_success
+  group-by:
+    - source_ip
+    - host
+  timespan: 10m
+falsepositives:
+  - A person mistyping a password several times before getting it right (RH-AUTH-05)
+level: high
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+  - attack.initial-access
+  - attack.t1078.003

@@ -1,0 +1,42 @@
+title: SSH invalid user
+id: 0e5b7c31-9d4a-4f62-a1c8-6b3e2d9f7a54
+name: dad_ssh_invalid_user
+status: experimental
+description: One login attempt for an account that does not exist (AUTH-02). Counted by the enumeration correlation.
+logsource:
+  product: solaris
+  service: sshd
+detection:
+  selection_invalid:
+    event_type: SSH_INVALID_USER
+  selection_failed:
+    event_type: SSH_LOGIN_FAILED
+    invalid_user_indicator: invalid user
+  condition: 1 of selection_*
+level: informational
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+---
+title: SSH username enumeration
+id: 5f2d8a96-3c7e-4b14-9e0a-7c1b4f8d2e65
+status: experimental
+description: At least 5 different non-existent accounts tried from one address within 10 minutes (AUTH-02).
+correlation:
+  type: value_count
+  rules:
+    - dad_ssh_invalid_user
+  group-by:
+    - source_ip
+  timespan: 10m
+  condition:
+    gte: 5
+    field: username
+falsepositives:
+  - An authorised vulnerability scan (RH-AUTH-04)
+level: medium
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+  - attack.reconnaissance
+  - attack.t1595.003

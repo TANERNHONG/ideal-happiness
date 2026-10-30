@@ -1,0 +1,26 @@
+{
+  "code_1_values": [
+    "ABC",
+    "PLC",
+    "XYZ"
+  ],
+  "code_2_values": [],
+  "identifier_1_values": [
+    "ID001",
+    "TAG10",
+    "P1",
+    "AB_CD"
+  ],
+  "identifier_2_values": [],
+  "identifier_3_values": [
+    "ID003",
+    "FAN 4",
+    "VOLT MTR",
+    "LEVEL",
+    "Pump House Fan Status",
+    "Vent (A)/B & C.D*"
+  ],
+  "identifier_3_keywords": [
+    "Live"
+  ]
+}

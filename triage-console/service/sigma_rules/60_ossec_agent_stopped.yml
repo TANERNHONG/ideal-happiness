@@ -1,0 +1,18 @@
+title: OSSEC agent stopped
+id: 8b3f1c6e-7a2d-4b90-9e5c-4d8a2f6b1e10
+status: experimental
+description: An OSSEC agent process received a signal and exited (OSSEC-01). Technique IDs as in the Phase 9 catalogue (ATT&CK v19.2).
+logsource:
+  product: ossec
+detection:
+  selection:
+    event_type: OSSEC_SIGNAL_RECEIVED_EXITING
+  condition: selection
+falsepositives:
+  - Planned patching or a reboot (RH-OSSEC-01)
+level: medium
+tags:
+  - attack.defense-impairment
+  - attack.t1685
+  - attack.impact
+  - attack.t1489

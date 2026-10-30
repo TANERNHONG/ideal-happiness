@@ -1,0 +1,21 @@
+title: Horizontal sweep
+id: f3b8d1a6-2e7c-4f05-9a3b-6d4e8c0f2b43
+status: experimental
+description: One address tried the same port on at least 15 different hosts within 5 minutes, all blocked (PF-02, IPF-02).
+correlation:
+  type: value_count
+  rules:
+    - dad_fw_block
+  group-by:
+    - source_ip
+    - destination_port
+  timespan: 5m
+  condition:
+    gte: 15
+    field: destination_ip
+falsepositives:
+  - Internet background scanning (RH-PF-01); monitoring or discovery broadcasts (RH-IPF-02)
+level: medium
+tags:
+  - attack.reconnaissance
+  - attack.t1595.001

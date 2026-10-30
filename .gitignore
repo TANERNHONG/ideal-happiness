@@ -1,0 +1,59 @@
+# What stays out of git. scripts/git_guard.py refuses a commit or push that would include any of it anyway.
+
+# Logs and everything derived from them: lines, names, addresses, scores, models
+/data
+/runtime
+/outdated
+/triage-console/var/
+*.sqlite
+*.sqlite3
+*.db
+*.pkl
+*.npz
+*.parquet
+*.joblib
+
+# Site-specific lists and findings (real servers, addresses, accounts)
+/pipeline/phase9_llm_triage/site/*.csv
+!/pipeline/phase9_llm_triage/site/public_holidays.csv
+/HYPOTHESIS_REGISTER.md
+/PRESENTATION_PREP.md
+
+# Screenshots of the console (they can show real servers and accounts); add a made-up one with git add -f
+/whitepaper/figures/
+/whitepaper/.typst-preview/
+
+# Release archives (git tags record releases now)
+/versions/
+
+# Secrets
+.env
+*.env
+.aws/
+.ssh/
+/triage-console/auth.json
+
+# Python
+__pycache__/
+*.py[cod]
+/.venv
+
+# Web build
+/triage-console/web/node_modules/
+/triage-console/web/dist/
+
+# Tools and editors
+/.idea
+/.typst-engine
+/.typst-tools
+/.claude/
+
+# LaTeX and Typst output
+/whitepaper/*.pdf
+/whitepaper/*.aux
+/whitepaper/*.log
+/whitepaper/*.out
+/whitepaper/*.toc
+/whitepaper/*.fls
+/whitepaper/*.fdb_latexmk
+/whitepaper/*.synctex.gz

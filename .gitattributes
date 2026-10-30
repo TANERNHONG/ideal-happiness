@@ -1,0 +1,19 @@
+# Real server names, addresses and accounts become pseudonyms on the way into git and come back on the way out
+# (scripts/git_names_filter.py; set up with python scripts/git_guard.py setup).
+*.md      filter=huh-names
+*.tex     filter=huh-names
+*.typ     filter=huh-names
+*.py      filter=huh-names
+*.ts      filter=huh-names
+*.js      filter=huh-names
+*.json    filter=huh-names
+*.txt     filter=huh-names
+*.csv     filter=huh-names
+*.yml     filter=huh-names
+*.yaml    filter=huh-names
+*.html    filter=huh-names
+*.log     filter=huh-names
+*.ps1     filter=huh-names
+*.cmd     filter=huh-names
+*.sh      filter=huh-names
+package-lock.json -filter

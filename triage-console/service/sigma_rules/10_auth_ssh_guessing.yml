@@ -1,0 +1,40 @@
+title: SSH login failed
+id: 3d1f6a52-8c1e-4f0b-9a57-2f8e6b1c0a11
+name: dad_ssh_login_failed
+status: experimental
+description: One failed SSH login. Counted by the guessing and spraying correlations; reports nothing itself.
+references:
+  - pipeline/phase9_llm_triage/backend/app/knowledge/attack_patterns_auth.md (AUTH-01)
+logsource:
+  product: solaris
+  service: sshd
+detection:
+  selection:
+    event_type: SSH_LOGIN_FAILED
+  condition: selection
+level: informational
+tags:
+  - attack.credential-access
+  - attack.t1110.001
+---
+title: SSH password guessing from one source
+id: 7b0c9e14-55a2-4d8e-b7f3-91c2d4e6a802
+name: dad_ssh_guessing
+status: experimental
+description: At least 8 failed SSH logins from one address on one server within 2 minutes (as OSSEC/Wazuh rule 5712).
+correlation:
+  type: event_count
+  rules:
+    - dad_ssh_login_failed
+  group-by:
+    - source_ip
+    - host
+  timespan: 2m
+  condition:
+    gte: 8
+falsepositives:
+  - Automation retrying an old password after a rotation (RH-AUTH-01)
+level: medium
+tags:
+  - attack.credential-access
+  - attack.t1110.001

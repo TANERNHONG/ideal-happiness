@@ -1,0 +1,20 @@
+title: SSH password spraying from one source
+id: c4a8e2f0-1b6d-4c39-8e75-0d9f3a6b2c43
+status: experimental
+description: Failed SSH logins for at least 10 different accounts from one address within a day (AUTH-03), across all servers.
+correlation:
+  type: value_count
+  rules:
+    - dad_ssh_login_failed
+  group-by:
+    - source_ip
+  timespan: 24h
+  condition:
+    gte: 10
+    field: username
+falsepositives:
+  - A shared jump host, VPN or NAT address (RH-AUTH-09)
+level: high
+tags:
+  - attack.credential-access
+  - attack.t1110.003

@@ -1,0 +1,350 @@
+[
+  {
+    "parse_status": "unclassified",
+    "line_number": 1,
+    "source_file": "unclassified.log",
+    "raw_line": "A 19/10/26 14:35:02  1/51/21 ABC DEF ZZ9      ID002    Main Plant Room      ID003    DEGC   12.5   34.0    RUN      U1              ",
+    "prefix": "A",
+    "prefix_raw": "A ",
+    "date_raw": "19/10/26",
+    "date": {
+      "day": 19,
+      "month": 10,
+      "year_2digit": 26
+    },
+    "date_iso": "2026-10-19",
+    "time_raw": "14:35:02",
+    "time": {
+      "hour": 14,
+      "minute": 35,
+      "second": 2
+    },
+    "timestamp": "2026-10-19T14:35:02+08:00",
+    "timestamp_utc": "2026-10-19T06:35:02Z",
+    "numeric_triplet_raw": " 1/51/21",
+    "numeric_triplet": {
+      "first": 1,
+      "second": 51,
+      "third": 21
+    },
+    "code_1": "ABC",
+    "code_2": "DEF",
+    "identifier_1": "ZZ9",
+    "identifier_2": "ID002",
+    "location_raw": "Main Plant Room     ",
+    "location": "Main Plant Room",
+    "location_normalized": "Main Plant Room",
+    "identifier_3": "ID003",
+    "user_name": null,
+    "is_reading": true,
+    "unit_raw": "DEGC",
+    "unit_or_type": "DEGC",
+    "number_1_raw": "   12.5",
+    "number_1": 12.5,
+    "number_2_raw": "   34.0",
+    "number_2": 34.0,
+    "state": "RUN",
+    "limit_code": "U1",
+    "limit_suffix": null,
+    "message": null,
+    "alarm_type": null,
+    "o_count": null,
+    "n_count": null,
+    "unclassified_fields": [
+      "identifier_1"
+    ],
+    "warnings": [
+      {
+        "code": "UNCLASSIFIED_IDENTIFIER_1",
+        "message": "Identifier 1 is not in IDENTIFIER_1_VALUES yet; the line stays unclassified until it is added.",
+        "field": "identifier_1",
+        "value": "ZZ9",
+        "start_offset": 37,
+        "end_offset": 40
+      }
+    ],
+    "errors": []
+  },
+  {
+    "parse_status": "unclassified",
+    "line_number": 2,
+    "source_file": "unclassified.log",
+    "raw_line": "A 19/10/26 14:35:02  1/51/21 QQQ DEF ID001    ID002    Main Plant Room      ID003    DEGC   12.5   34.0    APP      U1              ",
+    "prefix": "A",
+    "prefix_raw": "A ",
+    "date_raw": "19/10/26",
+    "date": {
+      "day": 19,
+      "month": 10,
+      "year_2digit": 26
+    },
+    "date_iso": "2026-10-19",
+    "time_raw": "14:35:02",
+    "time": {
+      "hour": 14,
+      "minute": 35,
+      "second": 2
+    },
+    "timestamp": "2026-10-19T14:35:02+08:00",
+    "timestamp_utc": "2026-10-19T06:35:02Z",
+    "numeric_triplet_raw": " 1/51/21",
+    "numeric_triplet": {
+      "first": 1,
+      "second": 51,
+      "third": 21
+    },
+    "code_1": "QQQ",
+    "code_2": "DEF",
+    "identifier_1": "ID001",
+    "identifier_2": "ID002",
+    "location_raw": "Main Plant Room     ",
+    "location": "Main Plant Room",
+    "location_normalized": "Main Plant Room",
+    "identifier_3": "ID003",
+    "user_name": null,
+    "is_reading": true,
+    "unit_raw": "DEGC",
+    "unit_or_type": "DEGC",
+    "number_1_raw": "   12.5",
+    "number_1": 12.5,
+    "number_2_raw": "   34.0",
+    "number_2": 34.0,
+    "state": "APP",
+    "limit_code": "U1",
+    "limit_suffix": null,
+    "message": null,
+    "alarm_type": null,
+    "o_count": null,
+    "n_count": null,
+    "unclassified_fields": [
+      "code_1"
+    ],
+    "warnings": [
+      {
+        "code": "UNCLASSIFIED_CODE_1",
+        "message": "Code 1 is not in CODE_1_VALUES yet; the line stays unclassified until it is added.",
+        "field": "code_1",
+        "value": "QQQ",
+        "start_offset": 29,
+        "end_offset": 32
+      }
+    ],
+    "errors": []
+  },
+  {
+    "parse_status": "unclassified",
+    "line_number": 3,
+    "source_file": "unclassified.log",
+    "raw_line": "A 19/10/26 14:35:02  1/51/21 ABC DEF ID001    ID002    Main Plant Room      PUMP 9   A      12.5   34.0    DISP     L1              ",
+    "prefix": "A",
+    "prefix_raw": "A ",
+    "date_raw": "19/10/26",
+    "date": {
+      "day": 19,
+      "month": 10,
+      "year_2digit": 26
+    },
+    "date_iso": "2026-10-19",
+    "time_raw": "14:35:02",
+    "time": {
+      "hour": 14,
+      "minute": 35,
+      "second": 2
+    },
+    "timestamp": "2026-10-19T14:35:02+08:00",
+    "timestamp_utc": "2026-10-19T06:35:02Z",
+    "numeric_triplet_raw": " 1/51/21",
+    "numeric_triplet": {
+      "first": 1,
+      "second": 51,
+      "third": 21
+    },
+    "code_1": "ABC",
+    "code_2": "DEF",
+    "identifier_1": "ID001",
+    "identifier_2": "ID002",
+    "location_raw": "Main Plant Room     ",
+    "location": "Main Plant Room",
+    "location_normalized": "Main Plant Room",
+    "identifier_3": "PUMP 9",
+    "user_name": null,
+    "is_reading": true,
+    "unit_raw": "A",
+    "unit_or_type": "A",
+    "number_1_raw": "   12.5",
+    "number_1": 12.5,
+    "number_2_raw": "   34.0",
+    "number_2": 34.0,
+    "state": "DISP",
+    "limit_code": "L1",
+    "limit_suffix": null,
+    "message": null,
+    "alarm_type": null,
+    "o_count": null,
+    "n_count": null,
+    "unclassified_fields": [
+      "identifier_3"
+    ],
+    "warnings": [
+      {
+        "code": "UNCLASSIFIED_IDENTIFIER_3",
+        "message": "Identifier 3 is not in IDENTIFIER_3_VALUES yet; the line stays unclassified until it is added.",
+        "field": "identifier_3",
+        "value": "PUMP 9",
+        "start_offset": 76,
+        "end_offset": 82
+      }
+    ],
+    "errors": []
+  },
+  {
+    "parse_status": "unclassified",
+    "line_number": 4,
+    "source_file": "unclassified.log",
+    "raw_line": "A 19/10/26 14:35:02  1/51/21 QQQ DEF ZZ9      ID002    Main Plant Room      Pump House Fan Status 2        STOP                     ",
+    "prefix": "A",
+    "prefix_raw": "A ",
+    "date_raw": "19/10/26",
+    "date": {
+      "day": 19,
+      "month": 10,
+      "year_2digit": 26
+    },
+    "date_iso": "2026-10-19",
+    "time_raw": "14:35:02",
+    "time": {
+      "hour": 14,
+      "minute": 35,
+      "second": 2
+    },
+    "timestamp": "2026-10-19T14:35:02+08:00",
+    "timestamp_utc": "2026-10-19T06:35:02Z",
+    "numeric_triplet_raw": " 1/51/21",
+    "numeric_triplet": {
+      "first": 1,
+      "second": 51,
+      "third": 21
+    },
+    "code_1": "QQQ",
+    "code_2": "DEF",
+    "identifier_1": "ZZ9",
+    "identifier_2": "ID002",
+    "location_raw": "Main Plant Room     ",
+    "location": "Main Plant Room",
+    "location_normalized": "Main Plant Room",
+    "identifier_3": "Pump House Fan Status 2",
+    "user_name": null,
+    "is_reading": false,
+    "unit_raw": null,
+    "unit_or_type": null,
+    "number_1_raw": null,
+    "number_1": null,
+    "number_2_raw": null,
+    "number_2": null,
+    "state": "STOP",
+    "limit_code": null,
+    "limit_suffix": null,
+    "message": null,
+    "alarm_type": null,
+    "o_count": null,
+    "n_count": null,
+    "unclassified_fields": [
+      "code_1",
+      "identifier_1",
+      "identifier_3"
+    ],
+    "warnings": [
+      {
+        "code": "UNCLASSIFIED_CODE_1",
+        "message": "Code 1 is not in CODE_1_VALUES yet; the line stays unclassified until it is added.",
+        "field": "code_1",
+        "value": "QQQ",
+        "start_offset": 29,
+        "end_offset": 32
+      },
+      {
+        "code": "UNCLASSIFIED_IDENTIFIER_1",
+        "message": "Identifier 1 is not in IDENTIFIER_1_VALUES yet; the line stays unclassified until it is added.",
+        "field": "identifier_1",
+        "value": "ZZ9",
+        "start_offset": 37,
+        "end_offset": 40
+      },
+      {
+        "code": "UNCLASSIFIED_IDENTIFIER_3",
+        "message": "Identifier 3 is not in IDENTIFIER_3_VALUES yet; the line stays unclassified until it is added.",
+        "field": "identifier_3",
+        "value": "Pump House Fan Status 2",
+        "start_offset": 76,
+        "end_offset": 99
+      }
+    ],
+    "errors": []
+  },
+  {
+    "parse_status": "unclassified",
+    "line_number": 5,
+    "source_file": "unclassified.log",
+    "raw_line": "A 19/10/26 14:35:02  1/51/21 ABCDEF  ID001    ID002    Main Plant Room      ID003    DEGC   12.5   34.0    RUN      U1              ",
+    "prefix": "A",
+    "prefix_raw": "A ",
+    "date_raw": "19/10/26",
+    "date": {
+      "day": 19,
+      "month": 10,
+      "year_2digit": 26
+    },
+    "date_iso": "2026-10-19",
+    "time_raw": "14:35:02",
+    "time": {
+      "hour": 14,
+      "minute": 35,
+      "second": 2
+    },
+    "timestamp": "2026-10-19T14:35:02+08:00",
+    "timestamp_utc": "2026-10-19T06:35:02Z",
+    "numeric_triplet_raw": " 1/51/21",
+    "numeric_triplet": {
+      "first": 1,
+      "second": 51,
+      "third": 21
+    },
+    "code_1": "ABCDEF",
+    "code_2": null,
+    "identifier_1": "ID001",
+    "identifier_2": "ID002",
+    "location_raw": "Main Plant Room     ",
+    "location": "Main Plant Room",
+    "location_normalized": "Main Plant Room",
+    "identifier_3": "ID003",
+    "user_name": null,
+    "is_reading": true,
+    "unit_raw": "DEGC",
+    "unit_or_type": "DEGC",
+    "number_1_raw": "   12.5",
+    "number_1": 12.5,
+    "number_2_raw": "   34.0",
+    "number_2": 34.0,
+    "state": "RUN",
+    "limit_code": "U1",
+    "limit_suffix": null,
+    "message": null,
+    "alarm_type": null,
+    "o_count": null,
+    "n_count": null,
+    "unclassified_fields": [
+      "code_1"
+    ],
+    "warnings": [
+      {
+        "code": "UNCLASSIFIED_CODE_1",
+        "message": "Code 1 is not in CODE_1_VALUES yet; the line stays unclassified until it is added.",
+        "field": "code_1",
+        "value": "ABCDEF",
+        "start_offset": 29,
+        "end_offset": 35
+      }
+    ],
+    "errors": []
+  }
+]

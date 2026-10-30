@@ -1,0 +1,16 @@
+A 19/10/26 14:35:02  1/51/21 ABC DEF ID001    ID002    Main Plant Room      ID003    DEGC   12.5   34.0    RUN      U1              
+  03/01/25 00:00:00  1/ 9/ 3 PLC SYS TAG10    TAG11    Plant 2              FAN 4    A         5    0.5    STOP     L1              
+A 29/02/24 23:59:59 12/ 0/ 7 XYZ QRS P1       P2-9_A   North Service Area   VOLT MTR V       230  240.5    OPEN     U2              
+  15/06/26 08:15:30          ABC     ID001    ID002                         LEVEL    %      99.9  100.0    ON       L2              
+A 01/12/25 12:00:00  1/51/21 ABC DEF ID001    ID002    Main Plant Room      Pump House Fan Status          OFF                      
+A 02/12/25 12:00:01  1/51/21 ABC DEF ID001    ID002    Main Plant Room      ID003    -        70     71    CLOSE                    
+A 03/12/25 07:30:00 10/11/12 ABC DEF AB_CD    ABCDEFGH9Rm.2/3 (A&B)         Vent (A)/B & C.D*              NO                       
+A 04/12/25 09:10:11  1/51/21 ABC DEF ID001    ID002    Main Plant Room      FAN 4    L/S    3.25    4.0    FAULT    WE ackd by op 2 
+A 05/12/25 10:11:12  1/51/21 ABC DEF ID001    ID002    Main Plant Room      Pump House Fan Status          COMPLETE MUx9            
+A 19/10/26 14:35:02  1/51/21 ABC DEF ID001             Main Plant Room      ID003    DEGC   12.5   34.0    RUN      U1              
+A 06/12/25 13:14:15  1/51/21 ABC DEF ID001    ID002    Main Plant Room      operator1                      ON                       
+A 07/12/25 14:15:16  1/51/21 ABC DEF ID001    ID002    Main Plant Room      T99 Live                       ON                       
+A 19/10/26 14:35:02  1/51/21 ABC DEF ID001    ABC DEF-GHI JK                ID003    DEGC   12.5   34.0    RUN      U1              
+A 19/10/26 14:35:02  1/51/21 ABC DEF ID001    ID002    Main Plant Room      ID003    DEGC   12.5   34.0    RUN         ackd         
+A 19/10/26 14:35:02  1/51/21 ABC DEF ID001    ID002    Main Plant Room      ID003    DEGC ****.* ****.*    RUN      U1              
+  Command Failure :                            Link lost !                                                                          

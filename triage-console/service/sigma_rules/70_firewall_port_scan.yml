@@ -1,0 +1,38 @@
+title: Firewall blocked a packet
+id: 4e9a2d73-1f5b-4c68-a3e7-9b0c6d2f5a21
+name: dad_fw_block
+status: experimental
+description: One packet blocked by PF or IPFilter. Counted by the scan correlations; reports nothing itself.
+logsource:
+  category: firewall
+detection:
+  selection:
+    event_type|startswith:
+      - PF_BLOCK_
+      - IPF_BLOCK_
+  condition: selection
+level: informational
+---
+title: Vertical port scan
+id: a7c5e0b2-9d3f-4a16-8b4e-2c1f7a9d6e32
+status: experimental
+description: One address tried at least 15 different ports on one host within 5 minutes, all blocked (PF-01, IPF-01).
+correlation:
+  type: value_count
+  rules:
+    - dad_fw_block
+  group-by:
+    - source_ip
+    - destination_ip
+  timespan: 5m
+  condition:
+    gte: 15
+    field: destination_port
+falsepositives:
+  - The vulnerability scanner or asset discovery (RH-PF-03)
+level: medium
+tags:
+  - attack.discovery
+  - attack.t1046
+  - attack.reconnaissance
+  - attack.t1595.001

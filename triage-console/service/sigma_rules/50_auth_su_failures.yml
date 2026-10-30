@@ -1,0 +1,36 @@
+title: su failed
+id: 2c7e9b14-8f3a-4d56-b1e0-5a9d6c3f8b98
+name: dad_su_failed
+status: experimental
+description: One failed switch of user with su (AUTH-10). Counted by the correlation below.
+logsource:
+  product: solaris
+  service: su
+detection:
+  selection:
+    event_type: SU_SESSION_FAILED
+  condition: selection
+level: informational
+---
+title: Repeated su failures
+id: 6d0a3f85-2b9c-4e17-8c4a-1f7e9b5d3c09
+status: experimental
+description: At least 3 failed su attempts by one account on one server within 10 minutes (AUTH-10).
+correlation:
+  type: event_count
+  rules:
+    - dad_su_failed
+  group-by:
+    - username
+    - host
+  timespan: 10m
+  condition:
+    gte: 3
+falsepositives:
+  - An administrator mistyping during an approved change (RH-AUTH-07)
+level: medium
+tags:
+  - attack.privilege-escalation
+  - attack.t1078.003
+  - attack.credential-access
+  - attack.t1110.001

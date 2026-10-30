@@ -1,0 +1,30 @@
+# Packages the console's service needs on top of the pipeline's environment (.venv).
+# Exact versions, so an install on the laptop gets what was tested.
+#   cd triage-console
+#   ..\.venv\Scripts\python.exe -m pip install -r requirements.txt
+
+# Single sign-on (service/auth.py)
+authlib==1.8.0              # OpenID Connect sign-in: the request with PKCE, the code exchange
+joserfc==1.7.5              # ID token: signature against the provider's keys, then the claims
+requests==2.34.2            # HTTP client for Authlib's calls to the provider
+
+# what those depend on
+cryptography==50.0.2
+cffi==2.1.1
+pycparser==3.0
+urllib3==2.8.0
+charset-normalizer==3.5.2
+idna==3.20
+certifi==2026.7.22
+
+# Patterns (service/patterns.py): a time limit per match, so a rule being written cannot hang the console.
+# Already in the pipeline's environment (transformers needs it).
+regex==2026.9.29
+
+# Local investigation-report exports (PDF uses the installed Microsoft Edge).
+python-docx==1.2.0
+lxml==6.1.3
+playwright==1.63.0
+pyee==13.0.1
+greenlet==3.5.5
+typing_extensions==4.16.0
