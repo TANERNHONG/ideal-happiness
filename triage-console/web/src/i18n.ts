@@ -7,6 +7,7 @@ const en = {
   appName: "Project DAD (Data Anomaly Detection) Console",
   appShort: "SMRT",
   "nav.dashboard": "Dashboard",
+  "nav.pipelines": "Pipeline Studio",
   "nav.analyze": "Analyze",
   "nav.patterns": "Patterns",
   "nav.sigma": "Sigma",
@@ -19,6 +20,7 @@ const en = {
   "nav.simple": "Check logs",
   "nav.reports": "Reports",
   "group.overview": "Overview",
+  "group.develop": "Develop",
   "group.prepare": "Prepare",
   "group.detect": "Detect",
   "group.investigate": "Investigate",
@@ -55,6 +57,7 @@ type Key = keyof typeof en;
 type Table = Partial<Record<Key, string>>;
 
 const zh: Table = {
+  "nav.pipelines": "流水线工作室", "group.develop": "开发",
   "nav.dashboard": "仪表板", "nav.analyze": "分析", "nav.patterns": "模式", "nav.models": "模型", "nav.data": "数据", "nav.review": "审查", "nav.audit": "审计", "nav.explain": "解释", "nav.profiles": "画像", "nav.datasets": "数据集", "nav.docs": "文档", "nav.settings": "设置", "nav.simple": "检查日志", "nav.reports": "报告", "mode.simple": "简单", "mode.advanced": "高级", "mode.switch": "切换到高级", "settings.mode": "控制台",
   "group.overview": "概览", "group.prepare": "准备", "group.detect": "检测", "group.investigate": "调查", "group.report": "报告", "group.console": "控制台",
   "llm.label": "本地模型", "llm.online": "Ollama 运行中", "llm.offline": "Ollama 未运行", "llm.refresh": "重新检查",
@@ -65,6 +68,7 @@ const zh: Table = {
 };
 
 const ms: Table = {
+  "nav.pipelines": "Studio Aliran Kerja", "group.develop": "Pembangunan",
   "nav.dashboard": "Papan Pemuka", "nav.analyze": "Analisis", "nav.patterns": "Corak", "nav.models": "Model", "nav.data": "Data", "nav.review": "Semakan", "nav.audit": "Audit", "nav.explain": "Penerangan", "nav.profiles": "Profil", "nav.datasets": "Set Data", "nav.docs": "Dokumentasi", "nav.settings": "Tetapan", "nav.simple": "Semak log", "nav.reports": "Laporan", "mode.simple": "Ringkas", "mode.advanced": "Lanjutan", "mode.switch": "Tukar ke Lanjutan", "settings.mode": "Konsol",
   "group.overview": "Gambaran", "group.prepare": "Persediaan", "group.detect": "Pengesanan", "group.investigate": "Siasatan", "group.report": "Laporan", "group.console": "Konsol",
   "llm.label": "Model tempatan", "llm.online": "Ollama sedang berjalan", "llm.offline": "Ollama tidak berjalan", "llm.refresh": "Semak semula",
@@ -75,6 +79,7 @@ const ms: Table = {
 };
 
 const ta: Table = {
+  "nav.pipelines": "செயலோட்டப் பணிமனை", "group.develop": "மேம்பாடு",
   "nav.dashboard": "முகப்புப் பலகை", "nav.analyze": "பகுப்பாய்வு", "nav.patterns": "வடிவங்கள்", "nav.models": "மாதிரிகள்", "nav.data": "தரவு", "nav.review": "மதிப்பாய்வு", "nav.audit": "தணிக்கை", "nav.explain": "விளக்கம்", "nav.profiles": "சுயவிவரங்கள்", "nav.datasets": "தரவுத்தொகுப்புகள்", "nav.docs": "ஆவணங்கள்", "nav.settings": "அமைப்புகள்", "nav.simple": "பதிவுகளைச் சரிபார்", "nav.reports": "அறிக்கைகள்", "mode.simple": "எளிய", "mode.advanced": "மேம்பட்ட", "mode.switch": "மேம்பட்டதுக்கு மாறு", "settings.mode": "கன்சோல்",
   "group.overview": "மேலோட்டம்", "group.prepare": "தயாரிப்பு", "group.detect": "கண்டறிதல்", "group.investigate": "விசாரணை", "group.report": "அறிக்கை", "group.console": "கன்சோல்",
   "llm.label": "உள்ளூர் மாதிரி", "llm.online": "Ollama இயங்குகிறது", "llm.offline": "Ollama இயங்கவில்லை", "llm.refresh": "மீண்டும் சரிபார்",
@@ -85,6 +90,7 @@ const ta: Table = {
 };
 
 const ja: Table = {
+  "nav.pipelines": "パイプラインスタジオ", "group.develop": "開発",
   "nav.dashboard": "ダッシュボード", "nav.analyze": "分析", "nav.patterns": "パターン", "nav.models": "モデル", "nav.data": "データ", "nav.review": "レビュー", "nav.audit": "監査", "nav.explain": "説明", "nav.profiles": "プロファイル", "nav.datasets": "データセット", "nav.docs": "ドキュメント", "nav.settings": "設定", "nav.simple": "ログを確認", "nav.reports": "レポート", "mode.simple": "シンプル", "mode.advanced": "詳細", "mode.switch": "詳細に切り替え", "settings.mode": "コンソール",
   "group.overview": "概要", "group.prepare": "準備", "group.detect": "検知", "group.investigate": "調査", "group.report": "報告", "group.console": "コンソール",
   "llm.label": "ローカルモデル", "llm.online": "Ollama 実行中", "llm.offline": "Ollama 停止中", "llm.refresh": "再確認",
@@ -95,6 +101,7 @@ const ja: Table = {
 };
 
 const ko: Table = {
+  "nav.pipelines": "파이프라인 스튜디오", "group.develop": "개발",
   "nav.dashboard": "대시보드", "nav.analyze": "분석", "nav.patterns": "패턴", "nav.models": "모델", "nav.data": "데이터", "nav.review": "검토", "nav.audit": "감사", "nav.explain": "설명", "nav.profiles": "프로필", "nav.datasets": "데이터셋", "nav.docs": "문서", "nav.settings": "설정", "nav.simple": "로그 확인", "nav.reports": "보고서", "mode.simple": "간단", "mode.advanced": "고급", "mode.switch": "고급으로 전환", "settings.mode": "콘솔",
   "group.overview": "개요", "group.prepare": "준비", "group.detect": "탐지", "group.investigate": "조사", "group.report": "보고", "group.console": "콘솔",
   "llm.label": "로컬 모델", "llm.online": "Ollama 실행 중", "llm.offline": "Ollama 중지됨", "llm.refresh": "다시 확인",

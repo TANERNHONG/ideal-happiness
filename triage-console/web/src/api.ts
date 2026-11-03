@@ -40,6 +40,7 @@ export interface Settings {
   dashboard_layout: DashboardLayout | null;
   review_filter_seconds: number;        // Settings → Review: a filter is stopped after this long (10 to 3,600)
   retention_months: number;             // Settings → Retention: copies of log lines kept this long (3, 6, 12, 24 or 36)
+  pipeline_storage: "retained" | "memory"; // Studio runs: retain each block's artifacts or keep intermediates in memory
 }
 
 /** Settings → Dashboard: the cards shown, in order, each with its width in columns of 12; the hidden ones; the person's

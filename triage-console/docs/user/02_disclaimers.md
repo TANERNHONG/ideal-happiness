@@ -21,7 +21,7 @@ relying on anything it shows.
   **proxy label** (observations holding a known-risky event, such as a failed
   login), because no analyst labels exist yet. They show how well the models'
   alerts line up with known-risky events, not attacks. See
-  [Detection, precision and lift](06_model_zoo_measures.md).
+  [Measuring the detectors](06_measures.md#models-detection-precision-and-lift).
 - Thresholds were chosen so that a set share of the validation period would be
   flagged. A different budget gives different alerts.
 - PF and IPFilter use the **presence method**: every activity is flagged by

@@ -8,7 +8,7 @@ import { chosenSource, logTypePicker } from "../log-type";
 import { sourceLabel, state } from "../state";
 
 const DETECTOR_LABELS: [string, string, string][] = [["robust", "Robust", ""], ["isolation_forest", "Isolation forest", "olive"], ["novelty", "Novelty", "red"]];
-const MEASURES_DOC = "#/docs/app/06_model_zoo_measures";     // docs/user/06_model_zoo_measures.md, opened in Documentation
+const MEASURES_DOC = "#/docs/app/06_measures?at=models-detection-precision-and-lift";   // docs/user/06_measures.md, opened in Documentation
 
 export async function renderModels(main: HTMLElement): Promise<void> {
   clear(main, loading());

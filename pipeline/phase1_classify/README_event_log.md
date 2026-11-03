@@ -82,7 +82,7 @@ not in your lists yet, as `event_log_unclassified_values.csv` does.
 | `event_log_devices.csv` | One row per device: its fields, lines, the states it shows (lines each), its status and group (see *Devices*) |
 | `event_log_devices_review.csv` | **The devices no group covers yet**, with the reason: for review |
 | `event_log_state_sets.csv` | The states the devices for review show together, the most devices first: **the groups to add next** |
-| `event_log_devices_summary.json` | Counts only: devices per status and per group, the groups used. The console's *Event log device types* page shows them |
+| `event_log_devices_summary.json` | Counts only: devices per status and per group, the groups used. In the console, *Device types* at the end of this page shows them |
 
 Statuses:
 - `parsed`: every rule holds.
@@ -122,7 +122,7 @@ device files and the console. To add a group, take a line of `event_log_state_se
 `states` column is written like a group: `LOCAL/REMOTE`) and run `event_log_devices.py` alone: it reads only the
 events files, so nothing is parsed again. Each state of a group must be in `STATES`, in upper case.
 
-In the console (Documentation, The pipeline): [Event log device types](event_log_devices.py), built from
+In the console (Documentation, The pipeline), this page ends with [Device types](#device-types), built from
 `STATE_GROUPS` when opened, with the counts of the last run.
 
 ## The lists you fill in

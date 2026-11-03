@@ -19,6 +19,7 @@ import { renderAudit } from "./tabs/audit";
 import { renderExplain } from "./tabs/explain";
 import { renderModels } from "./tabs/models";
 import { renderPatterns } from "./tabs/patterns";
+import { renderPipelines } from "./tabs/pipelines";
 import { renderProfiles } from "./tabs/profiles";
 import { renderReview } from "./tabs/review";
 import { renderSettings } from "./tabs/settings";
@@ -37,6 +38,7 @@ const SIMPLE: Tab[] = [
 const UPLOAD: Tab = { id: "upload", render: renderUpload };      // one upload: from either mode's Review
 const TABS: Tab[] = [
   { id: "dashboard", render: renderDashboard },
+  { id: "pipelines", render: renderPipelines },
   { id: "datasets", render: renderDatasets },
   { id: "patterns", render: renderPatterns },
   { id: "models", render: renderModels },
@@ -51,10 +53,11 @@ const TABS: Tab[] = [
   { id: "docs", render: renderDocs },
   { id: "settings", render: renderSettings },
 ];
-// Advanced mode's menu, in the order of an investigation: where things stand; making the logs readable and the models
-// ready (what the console can see); detecting; investigating; reporting; then the console itself.
+// Advanced mode's menu: overview; visual development; the existing preparation and detection pages; investigation,
+// reporting and console settings. Pipeline Studio grows alongside Prepare and Detect while its execution engine is built.
 const GROUPS: { id: string; tabs: string[] }[] = [
   { id: "overview", tabs: ["dashboard"] },
+  { id: "develop", tabs: ["pipelines"] },
   { id: "prepare", tabs: ["datasets", "patterns", "models"] },
   { id: "detect", tabs: ["analyze", "sigma"] },
   { id: "investigate", tabs: ["review", "audit", "explain", "profiles", "data"] },
@@ -140,15 +143,16 @@ function renderShell(): void {
       tabs.map(link),
       groupIcon(g.id, name, tabs, tabs.some((tab) => tab.id === menuId(active)), link));     // shown when collapsed
   });
+  // Three parts: the logo and mode stay at the top and the toggle at the bottom; only the pages between them scroll.
   clear(shell,
     h("nav", { class: "sidebar", "aria-label": "Main" },
-      h("div", { class: "brand", title: t("appName") },
-        h("span", { class: "brand-mark", "aria-hidden": "true" }, h("img", { src: "/brand/smrt-logo.svg", alt: "" })),
-        h("span", { class: "label" }, t("appName"))),
-      modeSwitch(),
-      menu,
-      h("div", { class: "spacer" }),
-      toggle),
+      h("div", { class: "sidebar-head" },
+        h("div", { class: "brand", title: t("appName") },
+          h("span", { class: "brand-mark", "aria-hidden": "true" }, h("img", { src: "/brand/smrt-logo.svg", alt: "" })),
+          h("span", { class: "label" }, t("appName"))),
+        modeSwitch()),
+      h("div", { class: "sidebar-menu" }, menu),
+      h("div", { class: "sidebar-foot" }, toggle)),
     h("div", { class: "workspace" }, main));
   clear(app, shell);
   dockPicker(main);

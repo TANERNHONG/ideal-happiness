@@ -1,6 +1,6 @@
-"""The event log's device types, as a document built from the pipeline's own code (event_log_devices.py) each time
-it is opened, so it always shows the groups the code uses; with the device counts of the last run, when there is one
-(event_log_devices_summary.json: counts only, never an identifier).
+"""The event log's device types, as the closing section of its README in Documentation, built from the pipeline's own
+code (event_log_devices.py) each time the page is opened, so it always shows the groups the code uses; with the device
+counts of the last run, when there is one (event_log_devices_summary.json: counts only, never an identifier).
 """
 from __future__ import annotations
 
@@ -9,9 +9,7 @@ import json
 from .config import DATA
 from .pipeline_code import module
 
-DOC_ID = "pipeline/phase1_classify/event_log_devices"
-AFTER = "pipeline/phase1_classify/event_log"                    # listed after the event log's README
-SOURCE = "pipeline/phase1_classify/event_log_devices.py"        # the path its links resolve against
+APPENDS_TO = "pipeline/phase1_classify/event_log"               # the event log's README, which this section ends
 COUNTS = DATA / "phase1_classify" / "event_log" / "event_log_devices_summary.json"
 
 
@@ -36,9 +34,9 @@ def markdown() -> str:
     run = _last_run()
     count = (lambda kind, key: f"{run.get(kind, {}).get(key, 0):,}") if run else (lambda kind, key: "–")
     fields = " · ".join(f.replace("_", " ") for f in devices.DEVICE_FIELDS)
-    out = ["# Event log device types", "",
-           f"A device is one signal: {fields}. The group of states it shows is its type "
-           "([Event logs](README_event_log.md#devices-by-their-states)).", ""]
+    out = ["## Device types", "",
+           f"Built from `STATE_GROUPS` in `event_log_devices.py` each time this page is opened. A device is one signal: "
+           f"{fields}. The group of states it shows is its type ([Devices, by their states](#devices-by-their-states)).", ""]
     if run:
         months = len(run.get("months", []))
         out += [f"Last run {run.get('created_at', '')} · {run.get('devices', 0):,} devices · {run.get('lines', 0):,} lines · "
@@ -47,9 +45,9 @@ def markdown() -> str:
             out += ["**Groups changed since the last run: run `event_log_devices.py`.**", ""]
     else:
         out += ["No counts yet: run `event_log.py`.", ""]
-    out += ["## Types", "", "| Type | States | Devices |", "|---|---|---:|"]
+    out += ["### Types", "", "| Type | States | Devices |", "|---|---|---:|"]
     out += [f"| {g} | {_states(states)} | {count('groups', g)} |" for g, states in named.items()]
-    out += ["", "## Not typed yet", "", "| Status | When | Devices |", "|---|---|---:|"]
+    out += ["", "### Not typed yet", "", "| Status | When | Devices |", "|---|---|---:|"]
     out += [f"| {s} | {when} | {count('statuses', s)} |" for s, when in devices.STATUSES.items() if s != devices.GROUPED]
     out += ["", "Their states together, the most devices first: `event_log_state_sets.csv`."]
     return "\n".join(out) + "\n"

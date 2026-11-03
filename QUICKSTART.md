@@ -2,7 +2,7 @@
 
 Run the **Project DAD (Data Anomaly Detection) Console** locally to check logs, review findings and write
 investigation reports. These steps use Windows PowerShell and the existing
-pipeline laptop. Updated 30 October 2026 (Singapore).
+pipeline laptop. Updated 2 November 2026 (Singapore).
 
 ## Open the console
 
@@ -11,7 +11,7 @@ If it is already running, open **<http://127.0.0.1:8765>**.
 Otherwise, start it in PowerShell:
 
 ```powershell
-cd C:\Users\shawn10\Documents\Project-Huh\triage-console
+cd C:\Users\shawn10\Documents\ideal-happiness\triage-console
 ..\.venv\Scripts\python.exe -m service
 ```
 
@@ -32,7 +32,7 @@ A source release ZIP excludes `.venv`, `data/` and runtime records.
 Run from the project root; adjust the path if your checkout is elsewhere:
 
 ```powershell
-cd C:\Users\shawn10\Documents\Project-Huh
+cd C:\Users\shawn10\Documents\ideal-happiness
 .\.venv\Scripts\python.exe -m pip install -r triage-console\requirements.txt
 cd triage-console\web
 npm.cmd ci

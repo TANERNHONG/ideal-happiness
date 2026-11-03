@@ -19,8 +19,10 @@ The console opens in **Simple** mode: four pages in the menu.
 The *Simple · Advanced* switch at the top of the menu shows every page
 described below. Your choice is kept. In Advanced, the menu is grouped in the order
 of an investigation: *Overview* (Dashboard), *Prepare* (Datasets, Patterns, Models),
-*Detect* (Analyze, Sigma), *Investigate* (Review, Data), *Report* (Reports) and
-*Console* (Documentation, Settings). The arrows at the foot of the menu shrink it to one icon per group: point at one (or click it) for its pages.
+*Detect* (Analyze, Sigma), *Investigate* (Review, Audit, Explain, Profiles, Data), *Report* (Reports) and
+*Console* (Documentation, Settings). The logo and the mode switch stay at the top of the menu and the arrows at its
+foot, both always in view; only the pages between them scroll. The arrows shrink the menu to one icon per group:
+point at one (or click it) for its pages.
 
 **SQL password.** Queries in Data → SQL, in a report's table and behind a chart's CSV ask for the
 SQL password once; after 30 minutes without a query, it asks again. It is **1234** until you
@@ -32,18 +34,19 @@ In Advanced mode, in the menu's order:
 
 | Page | What it is for |
 |---|---|
-| **Dashboard** | The starting page. Across the top: items waiting for review, those matching a Sigma rule, items labelled Security relevant (with Suspicious), and the share reviewed. Then the next items to open (click one to review it), review progress, how much the detectors flag and what data there is. Each card's (i) icon explains it; the table icon shows a chart as a table. |
+| **Dashboard** | The starting page. Across the top: items waiting for review, those matching a Sigma rule, items labelled Security relevant (with Suspicious), and the share reviewed. Then the next items to open (click one to review it) and review progress; the time to the first label, how often each mechanism's items were labelled relevant, and the audit's estimates; how much the detectors flag and what data there is; the entities you watch in Profiles, the rows each model learned from, and what the console was used for. Each card's (i) icon explains it; the table icon shows a chart as a table. |
 | **Datasets** | The datasets the pipeline holds and any that were added. An administrator signed in with SSO can add a dataset, import its archives and train models ([03 SSO and datasets](03_sso_and_datasets.md)). |
 | **Patterns** | For logs the pipeline cannot read yet: how much of a file Phase 1 recognises, the unknown lines grouped into shapes, regular expressions suggested and tried live, and rules saved per log type and exported for Phase 1. |
-| **Models** | What was trained for each view of the chosen log type, which views raise alerts, how many alerts each detector raised on the test period, and the model zoo; its (i) icon explains [detection, precision and lift](06_model_zoo_measures.md). *Retrain* goes to Datasets. |
+| **Models** | What was trained for each view of the chosen log type, which views raise alerts, how many alerts each detector raised on the test period, and the model zoo; its (i) icon explains [detection, precision and lift](06_measures.md#models-detection-precision-and-lift). *Retrain* goes to Datasets. |
 | **Analyze** | Paste log lines, upload a file, or give the path of a file on this laptop. Auth and OSSEC lines go through the pipeline's own steps and saved models; the result says whether they would be flagged, view by view, and where they land on the cluster map. PF and IPFilter use the presence rule: any traffic is flagged. |
 | **Sigma** | Rules for attacks that are already known (password guessing and spraying, user names tried, port scans). Run them on pasted lines, a file or a folder; the hits come most serious first, with their lines. Rules that are on also mark the groups they hit in Review. See [Sigma](05_sigma.md). |
 | **Review** | Groups the models flag at least twice as often as usual (auth, OSSEC), and any group holding a match of an enabled Sigma rule, from the test period and (marked *validation*) the validation period, then unusual amounts of activity (auth, OSSEC; see [Activity alerts](#activity-alerts)); or periods and flows with firewall activity (PF, IPFilter). Each one is *Needs review* until you record a label. Groups whose flagged events all belong to [whitelisted users](#whitelisted-users) are under *Whitelisted*. See [Reviewing](#reviewing) below. |
+| **Audit** | A small random sample each month, labelled without seeing whether it was flagged, for honest estimates of precision, missed relevant observations and recall. See [Measuring the detectors](06_measures.md#audit-labelling-a-random-sample). |
 | **Explain** | Why each activity alert (auth, OSSEC) was raised, in pictures: what was seen against the usual for that time and kind of day, the reasons, the day, the week as a heatmap and the last eight weeks. See [Explain](#explain). |
 | **Profiles** | Any server, source IP, username or destination IP on any day against its own normal, alerted or not; watch the ones you want on the Dashboard. See [Profiles](#profiles). |
 | **Data** | The training, validation and test spans, then *Message types* (two Sankey charts), *Clusters* (the map of similar activity, the groups, their lines, members and comments) and *SQL* (read-only queries over every log line, behind the SQL password). |
 | **Reports** | Write up an investigation as a printed-style incident report: details, sections, findings, log lines, tables, rarity, ATT&CK, maps and timelines. Every save is a version; export as Word, PDF or HTML. *Report* on a reviewed item in Review starts one from your notes. See [Reports and Review](04_reports_and_review.md). |
-| **Documentation** | The pipeline as an MRT line (click a station) and these documents as bus stops. Links inside a document open it here. |
+| **Documentation** | The pipeline as an MRT line, the Pipe Line (click a station), and these documents as bus stops. Links inside a document open it here. |
 | **Settings** | Your preferences, the Dashboard's layout, the Review filter limit, whitelisted users, the activity log and the passwords. See [Settings](#settings) below. |
 
 **Log type.** Models, Data and Review have a *Log type* dropdown at the top
@@ -325,7 +328,7 @@ then open <http://127.0.0.1:8765>. While developing the web app, also run
 - **Alert rate** of a cluster: the share of its observations that were flagged.
   **Lift**: that rate divided by the rate for the whole view. (The model zoo's
   lift on Models is a different measure: see
-  [Detection, precision and lift](06_model_zoo_measures.md).)
+  [Measuring the detectors](06_measures.md#models-detection-precision-and-lift).)
 - **Presence method** (PF, IPFilter): normal is no traffic, so any activity is
   flagged.
 - **Anomaly score**: the share of the validation period's observations that

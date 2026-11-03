@@ -764,7 +764,10 @@ def main():
             if args.verbose: traceback.print_exc()
     flat = [{key: value for key, value in item.items() if not isinstance(value, (dict, list))} for item in results]
     pd.DataFrame(flat).to_csv(args.output / "experiment_summary.csv", index=False); write_json(args.output / "experiment_summary.json", results)
-    log.write("Authentication Stage 4 completed: " + str(args.output / "experiment_summary.csv"), "COMPLETE", always=True)
+    # A failed dataset leaves its view without detectors: exit 1 so the pipeline stops instead of reporting success.
+    failures = sum(item.get("status") == "failed" for item in results)
+    log.write(f"Authentication Stage 4 finished ({failures} dataset failure(s)): " + str(args.output / "experiment_summary.csv"), "FAILED" if failures else "COMPLETE", always=True)
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

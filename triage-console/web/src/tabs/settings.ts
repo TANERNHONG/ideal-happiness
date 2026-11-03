@@ -1,6 +1,6 @@
 // Settings: language, appearance, the local model (same setting as the
 // top-right picker), your name, the Dashboard's layout (dashboard-editor.ts), whitelisted users (an override on the anomalies, service/whitelist.py)
-// and the activity log. Changing the whitelist or clearing the log needs the admin password.
+// pipeline artifact storage and the activity log. Changing the whitelist or clearing the log needs the admin password.
 
 import { api, qs } from "../api";
 import { badge, clear, errorBox, fmt, h, loading, select, table } from "../dom";
@@ -102,6 +102,19 @@ export function renderSettings(main: HTMLElement): void {
             h("label", { class: "field" }, h("span", {}, "Filter time limit"),
               h("div", { class: "row" }, filterSeconds, h("span", { class: "small muted" }, "s"),
                 h("button", { class: "btn small", onclick: saveFilterSeconds }, t("common.save"))))),
+          h("div", { class: "card" },
+            h("div", { class: "card-head" }, h("span", { class: "chip-icon" }, icon("pipelines")), h("h2", {}, "Pipeline storage")),
+            h("div", { class: "pills small", role: "group", "aria-label": "Pipeline storage" },
+              ([["retained", "Retain intermediates"], ["memory", "In memory"]] as const).map(([value, label]) => h("button", {
+                type: "button", class: (s.pipeline_storage ?? "retained") === value ? "on" : "",
+                "aria-pressed": String((s.pipeline_storage ?? "retained") === value),
+                onclick: () => save({ pipeline_storage: value }),
+              }, label))),
+            h("p", { class: "small muted", style: { marginTop: "12px" } },
+              "Retain intermediates saves each block’s artifacts for inspection after the run."),
+            h("p", { class: "small muted" },
+              "In memory keeps intermediate tables in RAM. Only first inputs and terminal outputs are saved when the run completes; preview summaries are also kept. Intermediate tables are unavailable after the run."),
+            h("a", { class: "small", href: "#/pipelines" }, "Open Pipeline Studio ", icon("arrow", 12))),
           h("div", { class: "card" },
             h("div", { class: "card-head" }, h("span", { class: "chip-icon" }, icon("history")), h("h2", {}, "Retention")),
             h("div", { class: "set-row" }, h("span", { class: "small muted" }, "Log lines kept"),

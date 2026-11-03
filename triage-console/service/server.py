@@ -27,7 +27,7 @@ from urllib.parse import parse_qs, urlparse
 from . import analyze, auth, catalog, cluster_index, datasets, clusters, event_counts, ip_flows, jobs, llm, report_ai, review_context, scoring, sql, sql_guard, sql_lock, store, uploads, variants
 from .config import APP, DATA, DEV_ORIGINS, DOCS, FROZEN, HOST, PORT, ROOT, WEB_DIST, WIDGET_ID, load_settings, restore_frozen_caches, save_settings
 from . import outliers, patterns, reports, report_maps, review_filters, sigma, sigma_ai, sigma_form, tabular, whitelist
-from . import audit, event_log_docs, explain, profiles, retention, yields
+from . import audit, event_log_docs, explain, pipeline_studio, profiles, retention, yields
 
 MAX_BODY = 64 * 1024 * 1024
 # The app's own page may run only its own scripts, load nothing from elsewhere and never sit inside another site's
@@ -95,6 +95,64 @@ def llm_models(q, body):
 @route("GET", "/api/catalog")
 def get_catalog(q, body):
     return catalog.catalog()
+
+
+# --- adjacent visual development platform: registered operators, isolated experiment artifacts ---
+@route("GET", "/api/studio/catalog")
+def studio_catalog(q, body):
+    return pipeline_studio.catalog()
+
+
+@route("POST", "/api/studio/validate")
+def studio_validate(q, body):
+    return pipeline_studio.validate((body or {}).get("draft"))
+
+
+def _studio_access(body):
+    flow = pipeline_studio.document(body.get("draft"))
+    if any(node["kind"] == "database" for node in flow["nodes"]):
+        sql_lock.require(body.get("token"))
+    return flow
+
+
+@route("POST", "/api/studio/run")
+def studio_run(q, body):
+    body = body or {}
+    flow = _studio_access(body)
+    checked = pipeline_studio.validate(flow)
+    if not checked["valid"]:
+        return {"validation": checked}
+    mode = body.get("mode", "sample")
+    if mode not in {"sample", "full"}:
+        raise ValueError("Choose a sample or full run.")
+    store.log_action(_actor(), "pipeline_run", flow["id"], {"mode": mode, "blocks": len(flow["nodes"]), "storage": load_settings()["pipeline_storage"]})
+    return {"job": jobs.start(pipeline_studio.run, flow, mode=mode)}
+
+
+@route("POST", "/api/studio/labels")
+def studio_labels(q, body):
+    body = body or {}
+    flow = _studio_access(body)
+    node_id, column = str(body.get("node_id", "")), str(body.get("column", ""))
+    node = next((node for node in flow["nodes"] if node["id"] == node_id), None)
+    if not node or node["kind"] != "labels" or node["config"].get("column") != column:
+        raise ValueError("Choose a Labels block and its column before scanning.")
+    return {"job": jobs.start(lambda progress: pipeline_studio.discover_labels(flow, node_id, column))}
+
+
+@route("GET", "/api/studio/runs")
+def studio_runs(q, body):
+    return pipeline_studio.history()
+
+
+@route("GET", "/api/studio/run")
+def studio_run_info(q, body):
+    return pipeline_studio.run_info(q.get("id", ""))
+
+
+@route("GET", "/api/studio/output")
+def studio_output(q, body):
+    return pipeline_studio.output(q.get("run", ""), q.get("node", ""), int(q.get("limit", "200")))
 
 
 @route("GET", "/api/models")
@@ -883,9 +941,19 @@ def _doc_files() -> dict[str, Path]:
     return {k: v for k, v in files.items() if v.exists()}
 
 
-# Documents built from the pipeline's code when opened, so they always match it:
-# id -> (the path their links resolve against, the builder, the document listed before them)
-GENERATED_DOCS = {event_log_docs.DOC_ID: (event_log_docs.SOURCE, event_log_docs.markdown, event_log_docs.AFTER)}
+# Sections built from the pipeline's code when a document is opened, so they always match it: document id -> builder
+# of the section added at its end
+APPENDED_SECTIONS = {event_log_docs.APPENDS_TO: event_log_docs.markdown}
+
+
+def _doc_text(key: str, path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    if key in APPENDED_SECTIONS:
+        try:
+            text = text.rstrip() + "\n\n" + APPENDED_SECTIONS[key]()
+        except Exception:                               # a pipeline import problem must not stop the console
+            pass
+    return text
 
 
 def _doc_entry(key: str, text: str, path: str, fallback: str) -> dict:
@@ -896,26 +964,16 @@ def _doc_entry(key: str, text: str, path: str, fallback: str) -> dict:
 
 @route("GET", "/api/docs")
 def list_docs(q, body):
-    out = [_doc_entry(key, path.read_text(encoding="utf-8"), path.relative_to(ROOT).as_posix(), path.stem)
-           for key, path in _doc_files().items()]
-    for key, (source, build, after) in GENERATED_DOCS.items():
-        try:
-            entry = _doc_entry(key, build(), source, key)
-        except Exception:                               # a pipeline import problem must not stop the console
-            continue
-        out.insert(next((i + 1 for i, d in enumerate(out) if d["id"] == after), len(out)), entry)
-    return {"docs": out}
+    return {"docs": [_doc_entry(key, _doc_text(key, path), path.relative_to(ROOT).as_posix(), path.stem)
+                     for key, path in _doc_files().items()]}
 
 
 @route("GET", "/api/docs/page")
 def get_doc(q, body):
-    if q.get("id", "") in GENERATED_DOCS:
-        source, build, _ = GENERATED_DOCS[q["id"]]
-        return {"id": q["id"], "markdown": build(), "path": source}
     path = _doc_files().get(q.get("id", ""))
     if path is None:
         raise KeyError("No such document.")
-    return {"id": q["id"], "markdown": path.read_text(encoding="utf-8"), "path": path.relative_to(ROOT).as_posix()}
+    return {"id": q["id"], "markdown": _doc_text(q["id"], path), "path": path.relative_to(ROOT).as_posix()}
 
 
 # --- HTTP plumbing -------------------------------------------------------------------

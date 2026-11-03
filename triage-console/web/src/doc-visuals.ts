@@ -11,10 +11,13 @@
 // - Purpose (§1): a title card, the funnel from millions of log lines to a person's decision (its
 //   figures read from the paragraph), and what the console lets a person do, as page tiles.
 // - Chapters: at the top, a numbered link to every section; each section heading links back.
+// - The other guides (Quick start, Reports and Review, Sigma, Measuring the detectors, Playbooks) and a lighter look for
+//   every remaining document: doc-guides.ts.
 
 import { clear, h, svg } from "./dom";
 import { icon } from "./icons";
 import { routinesGuide } from "./doc-routines";
+import { measuresGuide, plainLook, playbooksGuide, quickStart, reportsAndReview, sigmaGuide } from "./doc-guides";
 import { VERDICTS } from "./verdicts";
 
 type Key = "ops" | "sec" | "ml" | "adm" | "rev";
@@ -292,7 +295,7 @@ function criteria(list: HTMLUListElement): HTMLElement {
 /** The section's heading inside a title card: a large numeral, the title, and a count. */
 export function titleCard(heading: HTMLElement, count: string, glyph: string, colour: string, number?: number, small = false): void {
   const own = heading.firstChild?.nodeType === Node.TEXT_NODE ? heading.firstChild as Text : null;   // its text, not the ↑ link
-  const m = /^(\d+)\.\s*(.+)$/.exec((own?.data ?? heading.textContent ?? "").trim());
+  const m = /^(\d+[a-z]?)\.\s+(.+)$/.exec((own?.data ?? heading.textContent ?? "").trim());   // "1. Purpose", "4a. Patterns", never "0.2.0"
   const card = h("div", { class: `tc-card ${small ? "small" : ""}` },
     h("span", { class: "tc-num" }, m?.[1] ?? (number ? String(number) : "")),
     h("div", { class: "tc-text" }, h("div", { class: "tc-count" }, count)),
@@ -364,7 +367,7 @@ export function chapters(page: HTMLElement): void {
   const headings = [...page.querySelectorAll<HTMLElement>("h2")];
   if (headings.length < 3) return;
   const nav = h("nav", { class: "ch-nav", "aria-label": "Chapters" }, headings.map((heading, i) => {
-    const m = /^(\d+)\.\s*(.+)$/.exec(heading.textContent ?? "");
+    const m = /^(\d+[a-z]?)\.\s+(.+)$/.exec(heading.textContent ?? "");
     const chip = h("button", { class: "ch-chip", onclick: () => heading.scrollIntoView({ block: "start", behavior: "smooth" }) },
       h("span", { class: "ch-no" }, m?.[1] ?? String(i + 1)), h("span", { class: "ch-name" }, m?.[2] ?? heading.textContent ?? ""));
     chip.style.setProperty("--cc", CHAPTER_COLOURS[i % CHAPTER_COLOURS.length]);
@@ -444,7 +447,7 @@ export function sectionOf(heading: Element): Element[] {
   for (let el = heading.nextElementSibling; el && el.tagName !== "H2"; el = el.nextElementSibling) out.push(el);
   return out;
 }
-const headers = (table: Element) => [...table.querySelectorAll("thead th")].map((th) => (th.textContent ?? "").trim().toLowerCase());
+export const headers = (table: Element) => [...table.querySelectorAll("thead th")].map((th) => (th.textContent ?? "").trim().toLowerCase());
 export const cells = (table: Element) => [...table.querySelectorAll("tbody tr")].map((tr) => [...tr.querySelectorAll("td")]);
 export const content = (el: Element) => [...el.childNodes].map((n) => n.cloneNode(true));
 
@@ -457,7 +460,7 @@ function pageTiles(table: Element): HTMLElement {
 }
 
 /** "To | Do" → rows like the acceptance criteria: what you want, an arrow, how. */
-function actionRows(table: Element, left = "To", right = "Do"): HTMLElement {
+export function actionRows(table: Element, left = "To", right = "Do"): HTMLElement {
   return h("div", { class: "ac" }, h("div", { class: "ac-row head", "aria-hidden": "true" }, h("div", {}, left), h("span", {}), h("div", {}, right)),
     cells(table).map(([a, b]) => h("div", { class: "ac-row" }, h("div", { class: "ac-if strong-left" }, ...content(a)),
       h("span", { class: "ac-arrow", "aria-hidden": "true" }, "→"), h("div", { class: "ac-then" }, ...content(b)))));
@@ -488,14 +491,14 @@ export function stepTiles(list: Element): HTMLElement {
   }));
 }
 
-/** Drops the ": " after a list item's bold term from its first text, editing the text itself (never re-reading the
- * item as HTML). */
+/** Drops the ": " (or ", ") after a list item's bold term from its first text, editing the text itself (never re-reading
+ * the item as HTML). */
 export function dropLeadingColon(el: Element): void {
   for (const node of [...el.childNodes]) {
     if (node.nodeType !== Node.TEXT_NODE) return;
     const text = node.textContent ?? "";
     if (!text.trim()) continue;
-    node.textContent = text.replace(/^\s*:\s*/, "");
+    node.textContent = text.replace(/^\s*[:,]\s*/, "");
     return;
   }
 }
@@ -557,7 +560,7 @@ function disclaimers(page: HTMLElement): void {
 }
 
 /** An ordered list of steps with long content → a numbered vertical timeline. */
-function timeline(list: Element): HTMLElement {
+export function timeline(list: Element): HTMLElement {
   return h("ol", { class: "tl-steps" }, [...list.querySelectorAll(":scope > li")].map((li, i) => {
     const step = h("li", { class: "tl-step" }, h("span", { class: "tl-no" }, String(i + 1)), h("div", { class: "tl-body" }, ...content(li)));
     step.style.setProperty("--pc", CHAPTER_COLOURS[i % CHAPTER_COLOURS.length]);
@@ -635,5 +638,17 @@ export function enhanceDoc(id: string, page: HTMLElement): void {
     consoleReadme(page);
   } else if (id === "pipeline/phase4f_sequences/guide") {
     routinesGuide(page);
+  } else if (id === "app/QUICKSTART") {
+    quickStart(page);
+  } else if (id === "app/04_reports_and_review") {
+    reportsAndReview(page);
+  } else if (id === "app/05_sigma") {
+    sigmaGuide(page);
+  } else if (id === "app/06_measures") {
+    measuresGuide(page);
+  } else if (id === "app/07_playbooks") {
+    playbooksGuide(page);
+  } else {
+    plainLook(page);                                                   // the requirements, the version register, the pipeline's notes
   }
 }

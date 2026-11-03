@@ -75,6 +75,7 @@ DEFAULTS = {
     "dashboard_layout": None,       # Settings → Dashboard: {"cards": [{"id", "span"}, …] in order, "hidden": [id, …], "widgets": {id: {…}}}; None is the default
     "review_filter_seconds": 120,   # Settings → Review: a Review filter is stopped after this long (review_filters.Deadline)
     "retention_months": 12,         # Settings → Retention: copies of log lines older than this are removed (retention.py)
+    "pipeline_storage": "retained", # retained: save each block's artifacts; memory: keep intermediates in RAM during a run
 }
 FONT_FAMILIES = ("inter", "roboto", "helvetica", "system", "serif", "mono", "readable", "installed")
 FONT_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$")      # a family name only: it is put into CSS
@@ -92,6 +93,7 @@ TILE_NAME = re.compile(r"^[a-z0-9-]{0,32}$")                         # its icon'
 TILE_HEIGHT = (60, 1200)                                             # pixels
 REVIEW_FILTER_SECONDS = (10, 3600)                                   # the filter time limit, at least and at most
 RETENTION_MONTHS = (3, 6, 12, 24, 36)                                # the choices for how long copies of log lines are kept
+PIPELINE_STORAGE_MODES = ("retained", "memory")
 LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1"}
 _lock = threading.Lock()
 
@@ -200,6 +202,8 @@ def save_settings(changes: dict) -> dict:
                 value = min(1.5, max(0.8, float(value)))
             if key == "retention_months" and value not in RETENTION_MONTHS:
                 raise ValueError(f"Keep log lines for {', '.join(map(str, RETENTION_MONTHS))} months.")
+            if key == "pipeline_storage" and value not in PIPELINE_STORAGE_MODES:
+                raise ValueError("Pipeline storage must be retained or memory.")
             if key == "animations" and value not in ANIMATIONS:
                 raise ValueError(f"Animations must be one of {', '.join(ANIMATIONS)}.")
             if key == "animation_pack" and value not in ANIMATION_PACKS:

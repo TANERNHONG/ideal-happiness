@@ -2337,7 +2337,7 @@ def run_experiment(dataset):
         ),
         "test_score_spearman": correlation(test_scores["robust"], test_scores["isolation"]),
         "calibration": {
-            name: calibration.rate_check((threshold or {}).get("allowed_alerts", 0), len(validation_manifest), count, len(test_result))
+            name: calibration.rate_check((threshold or {}).get("allowed_alerts", 0), summary["validation_rows"], count, len(test_result))
             for name, threshold, count in (("robust", robust_threshold, robust_test_alerts), ("isolation", isolation_threshold, isolation_test_alerts),
                                            ("novelty", novelty_threshold, novelty_test_alerts))},
         "robust_dominant_feature_among_robust_alerts": (
@@ -2431,6 +2431,12 @@ def main():
     )
     write_json(OUTPUT_FOLDER / "experiment_summary.json", results)
     LOGGER.info("Complete: %s", OUTPUT_FOLDER / "experiment_summary.csv")
+    # A failed experiment leaves its view without detectors: exit 1 so the pipeline stops instead of reporting success.
+    failed = [item["dataset"] for item in results if item.get("status") == "failed"]
+    if failed:
+        LOGGER.error("%s of %s experiments failed: %s", len(failed), len(results), ", ".join(failed))
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
@@ -2441,10 +2447,13 @@ if __name__ == "__main__":
     EVENT_LOOKUP_FILE = args.event_lookup
     TRAIN_SAMPLE = args.train_sample
     try:
-        with runlog.run():
-            main()
+        with runlog.run() as outcome:
+            code = main()
+            if code:
+                outcome["status"] = "stopped"
     except KeyboardInterrupt:                    # runlog.run() has logged it
         sys.exit(130)
     except Exception:
         LOGGER.exception("OSSEC experiment runner failed")
         sys.exit(1)
+    sys.exit(code)

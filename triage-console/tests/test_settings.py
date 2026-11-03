@@ -1,4 +1,4 @@
-"""Tests for the console settings (service/config.py): the animation choices.
+r"""Tests for console settings (service/config.py), including pipeline artifact storage.
 
     cd triage-console
     ..\.venv\Scripts\python.exe -m unittest discover tests -v
@@ -55,6 +55,25 @@ class AnimationSettings(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     config.save_settings({"review_filter_seconds": value})
         self.assertEqual(config.load_settings()["review_filter_seconds"], 45)
+
+    def test_pipeline_storage_defaults_for_existing_settings_and_persists(self):
+        self.assertEqual(config.load_settings()["pipeline_storage"], "retained")
+        config.SETTINGS_FILE.write_text('{"theme": "dark"}', encoding="utf-8")
+        self.assertEqual(config.load_settings()["pipeline_storage"], "retained")
+        for mode in ("memory", "retained"):
+            with self.subTest(mode=mode):
+                saved = config.save_settings({"pipeline_storage": mode})
+                self.assertEqual(saved["pipeline_storage"], mode)
+                self.assertEqual(saved["theme"], "dark")
+                self.assertEqual(config.load_settings()["pipeline_storage"], mode)
+
+    def test_invalid_pipeline_storage_does_not_replace_saved_choice(self):
+        config.save_settings({"pipeline_storage": "memory"})
+        for value in ("", "Retained", "disk", "ram", None, True, 0, [], {}):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, "Pipeline storage"):
+                    config.save_settings({"pipeline_storage": value})
+                self.assertEqual(config.load_settings()["pipeline_storage"], "memory")
 
     def test_fonts(self):
         saved = config.save_settings({"font_family": "installed", "font_installed": "  LTA Identity  "})

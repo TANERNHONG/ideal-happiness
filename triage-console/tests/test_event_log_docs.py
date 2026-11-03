@@ -1,5 +1,5 @@
-"""Tests for the event log's device-types document (service/event_log_docs.py): built from the pipeline's own
-groups, with the counts of the last run when there is one.
+"""Tests for the event log's device types (service/event_log_docs.py): built from the pipeline's own groups, with the
+counts of the last run when there is one, as the closing section of the event log's README in Documentation.
 
     cd triage-console
     ..\\.venv\\Scripts\\python.exe -m unittest discover tests -v
@@ -15,7 +15,7 @@ from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from service import event_log_docs  # noqa: E402
+from service import event_log_docs, server  # noqa: E402
 from service.pipeline_code import module  # noqa: E402
 
 
@@ -34,7 +34,7 @@ class DeviceTypes(unittest.TestCase):
 
     def test_every_group_and_status_of_the_code(self):
         text = event_log_docs.markdown()
-        self.assertTrue(text.startswith("# Event log device types\n"))
+        self.assertTrue(text.startswith("## Device types\n"))
         for group in self.groups:
             self.assertRegex(text, rf"\| {group} \| .+ \| – \|")
         self.assertIn("| Transformer | 01–20 | – |", text)
@@ -55,6 +55,15 @@ class DeviceTypes(unittest.TestCase):
         self.assertNotIn("changed", text)
         self.counts.write_text(json.dumps({**run, "state_groups": self.groups[:-1]}), encoding="utf-8")
         self.assertIn("Groups changed since the last run", event_log_docs.markdown())
+
+    def test_ends_the_event_log_readme_in_documentation(self):
+        page = server.get_doc({"id": event_log_docs.APPENDS_TO}, None)["markdown"]
+        self.assertTrue(page.startswith("# Event logs"))
+        self.assertTrue(page.rstrip().endswith("`event_log_state_sets.csv`."))
+        self.assertIn("\n## Device types\n", page)
+        ids = [d["id"] for d in server.list_docs({}, None)["docs"]]
+        self.assertIn(event_log_docs.APPENDS_TO, ids)
+        self.assertFalse([i for i in ids if i.endswith("event_log_devices")])   # no longer a page of its own
 
 
 if __name__ == "__main__":

@@ -22,7 +22,9 @@ const PHASES: Phase[][] = [
    { id: "4c", name: "Map", icon: "map", sources: "auth, OSSEC", what: "Places observations on a flat map so that similar ones sit close together; you can see groups and stragglers. Drawn with t-SNE, and with UMAP as a second view of the same points.", gives: "A position for each observation" },
    { id: "4d", name: "Silence", icon: "clock", sources: "auth, OSSEC", what: "Finds servers that went quiet when they normally talk, which can mean logging was switched off.", gives: "Silent stretches per server" },
    { id: "4e", name: "First seen", icon: "review", sources: "auth, OSSEC, PF", what: "Lists accounts and addresses that appear on a server for the first time.", gives: "New pairs per server" },
-   { id: "4f", name: "Routines", icon: "flow", sources: "auth, OSSEC", what: "Reads each session as a sentence of events, learns the usual sentences on each server, and flags the ones told in an order rarely or never seen, saying which step was odd.", gives: "Routine catalogue and sequence alerts", doc: "pipeline/phase4f_sequences/guide" }],
+   { id: "4f", name: "Routines", icon: "flow", sources: "auth, OSSEC", what: "Reads each session as a sentence of events, learns the usual sentences on each server, and flags the ones told in an order rarely or never seen, saying which step was odd.", gives: "Routine catalogue and sequence alerts", doc: "pipeline/phase4f_sequences/guide" },
+   { id: "4g", name: "Activity", icon: "chart", sources: "auth, OSSEC", what: "Compares each server, account and address with its own usual for that time of week, and flags far more or far less activity than usual. Alerts that are one event, or one routine on several days, become one incident to review.", gives: "Activity alerts, grouped into incidents" },
+   { id: "4h", name: "Profiles", icon: "profiles", sources: "all", what: "Works out each server, account and address's normal week, alerted or not, so any of them can be checked against its own usual on the Profiles page.", gives: "A normal week per entity" }],
   [{ id: "5", name: "Evidence", icon: "docs", sources: "all", what: "Every flag is traced back to the original log lines behind it.", gives: "Original lines for every flag" }],
   [{ id: "6", name: "Report", icon: "docs", sources: "all", what: "A self-contained web page per log type with the findings, maps and explanations.", gives: "HTML report" }],
   [{ id: "7", name: "Alerts", icon: "alert", sources: "all", what: "Everything flagged is collected into one ranked list per log type.", gives: "Alert lists" },
@@ -151,7 +153,7 @@ export async function renderDocs(main: HTMLElement): Promise<void> {
             h("span", { class: "bus-eta" }, m <= 1 ? "Arr" : `${m} min`)));
         }))));
     clear(body,
-      h("div", { class: "card" }, h("div", { class: "card-head" }, h("span", { class: "chip-icon" }, icon("train")), h("h2", {}, "The pipeline line"),
+      h("div", { class: "card" }, h("div", { class: "card-head" }, h("span", { class: "chip-icon" }, icon("train")), h("h2", {}, "The Pipe Line"),
         h("span", { class: "end small muted" }, "Each phase is a station: click one")), map,
         h("div", { class: "mrt-legend tiny muted" },
           h("span", {}, h("i", { class: "lg-dot" }), "Station"),

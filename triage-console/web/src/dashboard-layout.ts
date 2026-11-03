@@ -13,16 +13,17 @@ export const WIDGET_SPAN = 6;
 export const HEIGHT = { min: 160, max: 1200, start: 360 };           // an SQL table's height, in pixels
 export const TILE_HEIGHT = { min: 60, max: 1200, start: 100 };       // a tile's; one column by this is "1 × 1"
 
+// In this order the default widths fill whole rows of 12 (3+3+3+3, 7+5, 3+5+4, 6+6, then full width): keep them so when adding a card.
 export const CARDS: { id: string; name: string; glyph: string; span: number }[] = [
   { id: "open", name: "Needs review", glyph: "hourglass", span: 3 },
   { id: "sigma", name: "Sigma matches", glyph: "sigma", span: 3 },
   { id: "security", name: "Security relevant", glyph: "alert", span: 3 },
   { id: "reviewed", name: "Reviewed", glyph: "check", span: 3 },
-  { id: "triage", name: "Time to label", glyph: "clock", span: 3 },
   { id: "next", name: "Next to review", glyph: "review", span: 7 },
   { id: "progress", name: "Review progress", glyph: "gauge", span: 5 },
-  { id: "yield", name: "Label yield", glyph: "target", span: 6 },
-  { id: "audit", name: "Audit", glyph: "audit", span: 6 },
+  { id: "triage", name: "Time to label", glyph: "clock", span: 3 },
+  { id: "yield", name: "Label yield", glyph: "target", span: 5 },
+  { id: "audit", name: "Audit", glyph: "audit", span: 4 },
   { id: "flagged", name: "Flagged", glyph: "analyze", span: 6 },
   { id: "data", name: "Data", glyph: "data", span: 6 },
   { id: "watched", name: "Watched", glyph: "eye", span: 12 },

@@ -81,6 +81,7 @@ import listBullets from "@phosphor-icons/core/regular/list-bullets.svg?raw";
 import lock from "@phosphor-icons/core/regular/lock.svg?raw";
 import magnifyingGlass from "@phosphor-icons/core/regular/magnifying-glass.svg?raw";
 import mapTrifold from "@phosphor-icons/core/regular/map-trifold.svg?raw";
+import minus from "@phosphor-icons/core/regular/minus.svg?raw";
 import path from "@phosphor-icons/core/regular/path.svg?raw";
 import pencilSimpleLine from "@phosphor-icons/core/regular/pencil-simple-line.svg?raw";
 import play from "@phosphor-icons/core/regular/play.svg?raw";
@@ -106,7 +107,7 @@ import x from "@phosphor-icons/core/regular/x.svg?raw";
 
 // The app's own names for what an icon stands for, and the Phosphor icon drawn for each
 const ICONS: Record<string, string> = {
-  dashboard: squaresFour, datasets: stackPlus, analyze: magnifyingGlass, patterns: bracketsCurly, sigma, models: cpu,
+  dashboard: squaresFour, pipelines: path, datasets: stackPlus, analyze: magnifyingGlass, patterns: bracketsCurly, sigma, models: cpu,
   data: database, review: flag, docs: bookOpen, settings: slidersHorizontal, collapse: caretDoubleLeft, expand: caretDoubleRight,
   refresh: arrowClockwise, archive, audit: listChecks, paste: clipboard, upload: uploadSimple, folder, play, copy, mail: envelopeSimple, reports: fileText,
   sparkle, sign: signature, grip: dotsSixVertical, plus, filter: funnel, history: clockCounterClockwise,
@@ -117,7 +118,7 @@ const ICONS: Record<string, string> = {
   "mode-simple": path, "mode-advanced": layout,
   info, simple: uploadSimple, uploads: flag, lock, shield: shieldCheck, trash, check, up: arrowUp, arrow: arrowRight,
   download: downloadSimple, unknown: question, alert: warning, map: mapTrifold, target: crosshair,
-  fullscreen: cornersOut, "fullscreen-exit": cornersIn, close: x, external: arrowSquareOut,
+  fullscreen: cornersOut, "fullscreen-exit": cornersIn, close: x, external: arrowSquareOut, minus,
   // One icon per kind of view
   individual: listBullets, session: link, episode: stack, attempt: lightning, flow: pulse, clock, hourglass,
   calendar: calendarBlank,
@@ -129,7 +130,7 @@ const ICONS: Record<string, string> = {
   "warning-circle": warningCircle, heart, "thumbs-up": thumbsUp, "thumbs-down": thumbsDown, cloud, wifi: wifiHigh,
   desktop, "shield-warning": shieldWarning, eye, note, "align-left": textAlignLeft, "align-center": textAlignCenter,
   // Advanced mode's menu groups, in the order of an investigation (main.ts)
-  "group-overview": binoculars, "group-prepare": toolbox, "group-detect": siren, "group-investigate": detective,
+  "group-overview": binoculars, "group-develop": layout, "group-prepare": toolbox, "group-detect": siren, "group-investigate": detective,
   "group-report": clipboardText, "group-console": gearSix,
 };
 
